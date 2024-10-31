@@ -34,7 +34,9 @@ let potionCost = 25
 function addHeroAttack() {
   for (let i = 0; i < heroes.length; i++) {
     let hero = heroes[i];
-    heroDmg += hero.damage
+    if (hero.health > 0) {
+      heroDmg += hero.damage
+    }
   }
   console.log(heroDmg)
 }
@@ -55,13 +57,18 @@ function bossAttacks() {
     let hero = heroes[i]
     hero.health -= boss.damage
     console.log(hero.health)
+    if (hero.health < 0) {
+      hero.health = 0
+    }
   }
+
+
   drawHeroStats()
 }
 
 function resetBoss() {
   if (boss.health <= 0) {
-    boss.health += boss.maxHealth * 2;
+    boss.health += boss.maxHealth * 1.5;
     boss.maxHealth = boss.health
     boss.level++
     boss.timesBeat++
@@ -93,7 +100,7 @@ function levelUp(heroName) {
   if (gold >= levelCost) {
     foundHero.damage *= 2
     foundHero.health *= 2
-    gold -= 25
+    gold -= levelCost
     levelCost = levelCost * 2
     drawHeroStats()
     drawLevel()
@@ -115,7 +122,7 @@ function levelUp(heroName) {
 
 function drawBoss() {
   const bossElm = document.getElementById('boss');
-  bossElm.innerHTML = `<p>${boss.health} ${boss.maxHealth} </p>`;
+  bossElm.innerHTML = `<p>Boss Health: ${boss.health.toFixed(0)}HP Boss Max Health: ${boss.maxHealth.toFixed(0)}HP </p>`;
 }
 
 drawBoss()
@@ -126,7 +133,7 @@ function drawHeroStats() {
     const hero = heroes[i];
     const heroElem = document.getElementById(hero.name)
     if (heroElem) {
-      heroElem.innerHTML = `<p>${hero.name} ${hero.health} ${hero.damage}</p>`;
+      heroElem.innerHTML = `<p>${hero.name}: ${hero.type}</p> <p> ${hero.health}HP ${hero.damage}dmg</p>`;
     }
   }
 }
@@ -135,14 +142,14 @@ drawHeroStats()
 
 function drawLevel() {
   const bossElm = document.getElementById('stats');
-  bossElm.innerHTML = `<p>${boss.timesBeat} ${boss.level} ${gold} </p>`;
+  bossElm.innerHTML = `<p>Times Defeated: ${boss.timesBeat}</p> <p>Boss Level: ${boss.level}</p> Gold: ${gold}c </p>`;
 }
 
 drawLevel()
 
 function drawLevelCost() {
   const bossElm = document.getElementById('prices');
-  bossElm.innerHTML = `<p>${levelCost} ${potionCost}</p>`;
+  bossElm.innerHTML = `<p>LevelUP: ${levelCost}c Potion: ${potionCost}c</p>`;
 }
 
 drawLevelCost()
@@ -150,4 +157,4 @@ drawLevelCost()
 //!SECTION DOCUMENT LOADING
 
 
-setInterval(bossAttacks, 5000)
+setInterval(bossAttacks, 1000)
