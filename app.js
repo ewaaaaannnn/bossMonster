@@ -44,7 +44,9 @@ function attackBoss() {
   boss.health -= heroDmg
   console.log(bossHurt)
   heroDmg = 0
+  resetBoss()
   drawBoss()
+
 }
 
 function bossAttacks() {
@@ -54,6 +56,15 @@ function bossAttacks() {
     console.log(hero.health)
   }
   drawHeroStats()
+}
+
+function resetBoss() {
+  if (boss.health <= 0) {
+    boss.health += boss.maxHealth * 2;
+    boss.maxHealth = boss.health
+    boss.level++
+
+  }
 }
 
 
@@ -71,7 +82,7 @@ function bossAttacks() {
 
 function drawBoss() {
   const bossElm = document.getElementById('boss');
-  bossElm.innerHTML = `<p>${boss.health} ${boss.level}</p>`;
+  bossElm.innerHTML = `<p>${boss.health} ${boss.maxHealth} ${boss.level}</p>`;
 }
 
 drawBoss()
