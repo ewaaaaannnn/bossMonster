@@ -22,12 +22,14 @@
   <main>
     <div class="row">
       <div class="col">
-        <div class="card">
+        <div onclick="buyPotion('Slate Slabrock')" class="card">
           <p id="Slate Slabrock"></p>
         </div>
-        <div class="card">
+        <div onclick="buyPotion('Swift Ironstag')" class="card">
           <p id="Swift Ironstag"></p>
         </div>
+        <button onclick="levelUp('Slate Slabrock')">Level Up Slate</button>
+        <button onclick="levelUp('Swift Ironstag')">Level Up Swift</button>
       </div>
       <div class="col">
         <p id="boss">
@@ -38,6 +40,11 @@
         </span>
       </div>
     </div>
+    <div class="row">
+      <h1 id="stats"></h1>
+    </div>
+    <div class="row"></div>
+    <h3 id="prices"></h3>
   </main>
 
 </body>
